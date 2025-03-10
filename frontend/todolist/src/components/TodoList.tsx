@@ -28,18 +28,6 @@ const TodoList = () => {
       });
   };
 
-  const toggleTask = (id: number) => {
-    axios.put(`http://localhost:5000/tasks/${id}`).then((response) => {
-      setTasks(tasks.map((task) => (task.id === id ? response.data : task)));
-    });
-  };
-
-  const deleteTask = (id: number) => {
-    axios.delete(`http://localhost:5000/tasks/${id}`).then(() => {
-      setTasks(tasks.filter((task) => task.id !== id));
-    });
-  };
-
   return (
     <div className={style["container-todo"]}>
       <div className={style.todo}>
@@ -60,10 +48,7 @@ const TodoList = () => {
                   {task.title}
                 </span>
               </div>
-              <div>
-                <button onClick={() => toggleTask(task.id)}><i className="bi bi-check-lg"></i></button>
-                <button onClick={() => deleteTask(task.id)}><i className="bi bi-trash"></i></button>
-              </div>
+
             </li>
           ))}
         </ul>
