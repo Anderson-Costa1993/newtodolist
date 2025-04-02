@@ -28,6 +28,17 @@ const TodoList = () => {
       });
   };
 
+  // Função para marcar uma tarefa como concluída/não concluída
+  const toggleComplete = (id: number) => {
+    axios.put(`http://localhost:5000/tasks/${id}`).then(() => {
+      setTasks(
+        tasks.map((task) =>
+          task.id === id ? { ...task, completed: !task.completed } : task
+        )
+      );
+    });
+  };
+
   return (
     <div className={style["container-todo"]}>
       <div className={style.todo}>
@@ -39,16 +50,21 @@ const TodoList = () => {
         <ul className={style.lista}>
           {tasks.map((task) => (
             <li key={task.id}>
-              <div className={style['tarefa-name']}>
+              <div className={style["tarefa-name"]}>
                 <span
                   style={{
                     textDecoration: task.completed ? "line-through" : "none",
                   }}
-                >
+                >0
                   {task.title}
                 </span>
               </div>
-
+              {/* Botão para alternar o status da tarefa */}
+              <button onClick={() => toggleComplete(task.id)}>
+                <i
+                  className={task.completed ? "bi bi-x-lg" : "bi bi-check-lg"}
+                ></i>
+              </button>
             </li>
           ))}
         </ul>

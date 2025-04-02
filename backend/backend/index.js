@@ -32,6 +32,14 @@ app.post("/tasks", async (req, res) => {
   res.json(result.rows[0]);
 });
 
+// Rota para marcar como concluído
+app.put("/tasks/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await pool.query("UPDATE tasks SET completed = NOT completed WHERE id = $1 RETURNING *", [id]);
+  res.json(result.rows[0]);
+});
+
+
 // Inicia o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
